@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery Repeater</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .repeater {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="repeater-container">
+    <div class="repeater">
+      <div class="element">
+        <input type="text" class="input" placeholder="Element 1" id="element1">
+        <button class="add">Add</button>
+        <button class="remove">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      let counter = 1;
+
+      // Add element within a specific repeater
+      $('#repeater-container').on('click', '.repeater .add', function () {
+        const $template = $(this).closest('.element').clone();
+
+        counter++;
+        $template.find('.input').val('').attr('id', 'element' + counter);
+
+        $(this).closest('.element').after($template);
+      });
+
+      // Remove element
+      $('#repeater-container').on('click', '.repeater .remove', function () {
+        const $thisRepeater = $(this).closest('.repeater');
+        const $element = $(this).closest('.element');
+        if ($thisRepeater.find('.element').length > 1) {
+          $element.remove();
+        }
+      });
+    });
+  </script>
+</body>
